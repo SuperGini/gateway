@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: gateway
+
+  security:
+    oauth2:
+      client:
+        provider:
+          my-keycloak-provider:
+            issuer-uri: "http://localhost:8080/realms/gini-project"
+        registration:
+          keycloak-spring-gateway-client:
+            provider: my-keycloak-provider
+            client-id: ginitoru-app
+            client-secret: r0Caq9p1o9iKm59YmHtrlmU3d5NZaQgt
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+            scope:
+              - access
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+      routes:
+        - id: parts
+          uri: http://localhost:9292
+          predicates:
+            - Path=/v1/parts/**
+        - id: users
+          uri: http://localhost:9292
+          predicates:
+            - Path=/v1/users/**
+        - id: wish
+          uri: http://localhost:9292
+          predicates:
+            - Path=/v1/wishParts/**
+        - id: manager
+          uri: http://localhost:9292
+          predicates:
+            - Path=/v1/x/parts/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+#spring.application.name=gateway
+#spring.config.import=optional:configserver:http://localhost:8888
+
+
+
+server:
+  port: 8767
+
+logging:
+  level:
+    org.zalando.logbook: TRACE
