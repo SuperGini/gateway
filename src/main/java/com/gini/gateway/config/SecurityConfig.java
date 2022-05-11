@@ -7,29 +7,25 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 public class SecurityConfig {
-/**
- *
- * don't need this. All the configs are in the properties.yml file
- *
- * */
 
-//
-//    @Bean
-//    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
-//
-//        http.authorizeExchange()
-//                .pathMatchers("/actuator/**")
-//                .permitAll()
-//            .and()
-//                .authorizeExchange()
-//                .anyExchange()
-//                .authenticated()
-//            .and()
-//                .oauth2Login(); //to redirect to oauth2 login page
-//
-//
-//        return http.build();
-//    }
+
+    @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
+
+        http.authorizeExchange()
+                .pathMatchers("/actuator/**")
+                .permitAll()
+            .and()
+                .authorizeExchange()
+                .anyExchange()
+                .authenticated()
+            .and()
+                .oauth2Login(); //to redirect to oauth2 login page -> vom folosi oauth login in loc de http basic
+                                //si va baga si Oauth2filter
+
+
+        return http.build();
+    }
 
 
 }

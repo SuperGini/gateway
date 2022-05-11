@@ -21,7 +21,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - TokenRelay=
+        - TokenRelay
       routes:
         - id: parts
           uri: http://localhost:9292
